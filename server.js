@@ -20,6 +20,7 @@ funcsObject = {
 
 
       console.table(departments)
+      continueQuit();
       
     })
   },
@@ -36,6 +37,7 @@ funcsObject = {
         }
       });
       console.table(roles);
+      continueQuit();
     });
   },
 
@@ -53,6 +55,7 @@ funcsObject = {
         }
       });
       console.table(employees)
+      continueQuit();
     });
   },
 
@@ -240,13 +243,13 @@ const promptPortal = () => {
         value: "addEmployee"
       },
     ]
-  }).then( async (answer) => {
+  }).then((answer) => {
     //if it is  view selection
    
       // console.log('view selection', answer.menu);
       //call the function to viw
-      await funcsObject[answer.menu]()
-      continueQuit();
+      funcsObject[answer.menu]()
+      
 
  /*  originally had planned on trying to keep my code concise and
        taking the selection, turining it camelcase and then 
