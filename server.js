@@ -12,10 +12,7 @@ const {
 
 // database.ping(); // sanity checks
 
-/*
 
-╯
-*/
 funcsObject = {
   viewAllDepartments: () => {
     database.getAllDepartments().then(([rows]) => {
@@ -29,8 +26,8 @@ funcsObject = {
       });
 
       console.table(departments);
-    });
-    // continueQuit();
+    }).then(continueQuit())
+    // ;
   },
 
   viewAllRoles: () => {
@@ -66,19 +63,26 @@ funcsObject = {
   },
 
   addDept: () => {
-    //variable to pass over necessary add information
-    const deptName = "accounting";
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'role',
+        message: 'Name of new department'
+      }
+    ]).then(ans=>{
+      console.log(ans.role)
+      //variable to pass over necessary add information
+    const deptName = ans.role;
     module.exports = deptName;
     database.addDepartment(deptName).then
-    getDepartments()
+    funcsObject['viewAllDepartments']()
+      
+    })
+    
   },
 
   addRole: () => {
-    // inquirer.prompt([
-    //   {
-    //     name: ''
-    //   }
-    // ])
+  
     //variable to pass over necessary add information
     const roleData = '("Sales Secretary", 45000, 3)';
     console.log(roleData)
@@ -90,7 +94,7 @@ funcsObject = {
 
   addEmployee: () => {
     //variable to pass over 
-    const employeeData = '("Eugene", "Bonerface", 10, "Dick Cooke")'
+    const employeeData = '("Eugene", "Sampson", 10, "Dick Cooke")'
     module.exports = employeeData;
     database.addNewEmployee(employeeData).then
     getEmployees();
@@ -172,22 +176,22 @@ const promptPortal = () => {
   })
  
 }
-// const continueQuit = () =>{
-//   inquirer.prompt({
-//     name: 'continue',
-//     type: 'confirm',
-//     message: `
+const continueQuit = () =>{
+  inquirer.prompt({
+    name: 'continue',
+    type: 'confirm',
+    message: `
     
-//     Anything Else?`,
-//     default: true
-//   }).then(somethingElse => {
-//     if (somethingElse.continue) {
-//       promptPortal();
-//     } else {
-//       funcsObject[closeServer]();
-//     }
-//   })
-// }
+    Anything Else?`,
+    default: true
+  }).then(somethingElse => {
+    if (somethingElse.continue) {
+      promptPortal();
+    } else {
+      funcsObject[closeServer]();
+    }
+  })
+}
 
 
 promptPortal();
