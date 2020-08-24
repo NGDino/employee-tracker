@@ -6,34 +6,26 @@ const Choices = require('inquirer/lib/objects/choices');
 const {
   prompts
 } = require('inquirer');
-// const { getAllRoles, addDepartment } = require('./db/index');
-
-
-
-// database.ping(); // sanity checks
-
 
 funcsObject = {
-  viewAllDepartments: () => {
-    database.getAllDepartments().then(([rows]) => {
+  viewAllDepartments: async () => {
+    await database.getAllDepartments().then(([rows]) => {
 
       const departments = rows.map(row => {
-        // console.log(row.id, row.name)
         return {
           id: row.id,
           name: row.name
         }
       });
 
+
       console.table(departments)
       
     })
-    
-    // ;
   },
 
-  viewAllRoles: () => {
-    database.getAllRoles().then(([rows]) => {
+  viewAllRoles: async () => {
+    await database.getAllRoles().then(([rows]) => {
 
       const roles = rows.map(row => {
         return {
@@ -47,8 +39,8 @@ funcsObject = {
     });
   },
 
-  viewAllEmployees: () => {
-    database.getAllEmployees().then(([rows]) => {
+  viewAllEmployees: async () => {
+   await database.getAllEmployees().then(([rows]) => {
       const employees = rows.map(row => {
         return {
           id: row.id,
@@ -64,8 +56,8 @@ funcsObject = {
     });
   },
 
-  addDept: () => {
-    inquirer.prompt([
+  addDept: async () => {
+    await inquirer.prompt([
       {
         type: 'input',
         name: 'department',
@@ -73,12 +65,10 @@ funcsObject = {
       }
     ]).then(ans=>{
       console.log(ans.role)
-      //variable to pass over necessary add information
-    const deptName = ans.department;
-    module.exports = deptName;
-    database.addDepartment(deptName).then
-    funcsObject['viewAllDepartments']()
-      
+      const deptName = ans.department;
+      module.exports = deptName;
+      database.addDepartment(deptName).then
+      funcsObject['viewAllDepartments']()
     })
     
   },
@@ -182,37 +172,26 @@ funcsObject = {
             name: "Sales Executive",
             value: [12, '"Dick Cooke"']
           }
-        ]
+        ]}
+        ]).then(ans => {
+            const employeeData = `("${ans.firstName}", "${ans.lastName}", ${ans.job})`
+            console.log(employeeData)
+            module.exports = employeeData;
+            database.addNewEmployee(employeeData).then
+            funcsObject['viewAllEmployees']()
 
-      }//,
-      // {
-      //   type: 'list',
-      //   name: 'manager',
-      //   message: "Who is their manager",
-      //   choices: ["Adan McCormick", "Clair Carter", "Dick Cooke"]
-      // }
-    ]).then(ans =>{
-       //variable to pass over 
-    const employeeData = `("${ans.firstName}", "${ans.lastName}", ${ans.job})`
-    console.log(employeeData)
-    module.exports = employeeData;
-    database.addNewEmployee(employeeData).then
-    funcsObject['viewAllEmployees']()
-
-    })
+        })
    ;
 
   },
 
   closeServer: () => {
-    console.log(GoodBye)
+    console.log("GoodBye")
     // figure out how to exit npm
     process.exit
   }
   
 }
-
-//start of application
 
 
 const promptPortal = () => {
@@ -261,24 +240,14 @@ const promptPortal = () => {
         value: "addEmployee"
       },
     ]
-  }).then(answer => {
+  }).then( async (answer) => {
     //if it is  view selection
-    if (answer.menu.includes("view")) {
+   
       // console.log('view selection', answer.menu);
       //call the function to viw
-      funcsObject[answer.menu]()
-      
-      
-     
+      await funcsObject[answer.menu]()
+      continueQuit();
 
-    } else {
-      console.log('add selection', answer.menu)
-      funcsObject[answer.menu]()
-      
-    
-    }
-
-    
  /*  originally had planned on trying to keep my code concise and
        taking the selection, turining it camelcase and then 
        using that to call function.  Got on help BCS and explained
@@ -313,7 +282,7 @@ const continueQuit = ()=> {
     if (somethingElse.continue) {
       promptPortal();
     } else {
-      funcsObject[closeServer]();
+      funcsObject["closeServer"]();
     }
   })
 }
