@@ -1,109 +1,34 @@
-# 12 SQL: Employee Tracker
+# Dinocorp Employee Tracker
 
-Developers are often tasked with creating interfaces that make it easy for non-developers to view and interact with information stored in databases. These interfaces are known as Content Management Systems (CMS). Your challenge this week is to build a command-line application to manage a company's database of employees using Node.js, Inquirer, and MySQL.
+## Overview
+This CLI application manages a database of employees.  From the main menu you can view the different departments, roles and employees.  There is also an option to add a new department, role and Employee.
 
-Because this application won’t be deployed, you’ll also need to provide a link to a walkthrough video that demonstrates its functionality and all of the acceptance criteria below being met. You’ll need to submit a link to the video and add it to the README of your project.
+## Installation and Set UP
 
-## User Story
+Must have Node JS and MySQL to use this application. Open a terminal in the root folder and hit npm install.  This will install inquirer, sql2 and Console Table.  Copy and paste both the Schema and the Seeds files (or open them) into MySQL workbench.  Run the workbench to populate the database
 
-```md
-AS A business owner
-I WANT to be able to view and manage the departments, roles, and employees in my company
-SO THAT I can organize and plan my business
-```
+## Usage
 
-## Acceptance Criteria
-
-```md
-GIVEN a command-line application that accepts user input
-WHEN I start the application
-THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-WHEN I choose to view all departments
-THEN I am presented with a formatted table showing department names and department ids
-WHEN I choose to view all roles
-THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
-WHEN I choose to view all employees
-THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-WHEN I choose to add a department
-THEN I am prompted to enter the name of the department and that department is added to the database
-WHEN I choose to add a role
-THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-WHEN I choose to add an employee
-THEN I am prompted to enter the employee’s first name, last name, role, and manager and that employee is added to the database
-WHEN I choose to update an employee role
-THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
-```
-
-## Mock-Up
-
-The following animation shows an example of the application being used from the command line:
-
-![Command Line demo](./Assets/12-sql-homework-demo-01.gif)
+Open a terminal in the root directory and enter 'npm start'.  Use the up and down arrows to navigate to the action you would like to preform.  Press enter to select the desired action.  For any "View" selection you will see a table with the information you selected.  If you select an "add" action you will see a prompt to enter the necessary information to run an add query in mysql.  Once you have finished the prompt a table including the new entry will be called and displayed in the terminal.
 
 
-## Getting Started
+## Examples
 
-You’ll need to use the [MySQL2 package](https://www.npmjs.com/package/mysql2) to connect to your MySQL database and perform queries, the [Inquirer package](https://www.npmjs.com/package/inquirer) to interact with the user via the command-line, and the [console.table package](https://www.npmjs.com/package/console.table) to print MySQL rows to the console.
+The following Image shows an example of what you will see on the main menu of the application:
 
-You might also want to make your queries asynchronous. MySQL2 exposes a `.promise()` function on Connections to "upgrade" an existing non-promise connection to use promises. Look into [MySQL2's documentation](https://www.npmjs.com/package/mysql2) in order to make your queries asynchronous.
+![main menu](./Assets/main-menu.jpg)
 
-Design the following database schema containing three tables:
+The following image is an example of a table of data that is returned on a view action:
 
-![Database Demo](./Assets/12-sql-homework-demo-02.png)
+![view table](./Assets/table-ex.jpg)
 
-* **department:**
+The following image is an example of a a prompt to add a new employee:
 
-    * `id` - INT PRIMARY KEY
-
-    * `name` - VARCHAR(30) to hold department name
-
-* **role:**
-
-    * `id` - INT PRIMARY KEY
-
-    * `title` - VARCHAR(30) to hold role title
-
-    * `salary` - DECIMAL to hold role salary
-
-    * `department_id` - INT to hold reference to department role belongs to
-
-* **employee:**
-
-    * `id` - INT PRIMARY KEY
-
-    * `first_name` - VARCHAR(30) to hold employee first name
-
-    * `last_name` - VARCHAR(30) to hold employee last name
-
-    * `role_id` - INT to hold reference to employee role
-
-    * `manager_id` - INT to hold reference to another employee that is manager of the current employee. This field may be null if the employee has no manager
-
-You may want to use a separate file containing functions for performing specific SQL queries you'll need to use. A constructor function or Class could be helpful for organizing these. You may also want to include a `seeds.sql` file to pre-populate your database. This will make the development of individual features much easier.
+![add new](./Assets/add-new.jpg)
 
 
-## Bonus
+## More Information
 
-See if you can add some additional functionality to your application, such as the ability to:
+Since this is a CLI application it is not deployed.  Check out my rundown of the application on youtube:
 
-* Update employee managers
-
-* View employees by manager
-
-* View employees by department
-
-* Delete departments, roles, and employees
-
-* View the total utilized budget of a department -- ie the combined salaries of all employees in that department
-
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* A walkthrough video demonstrating the functionality of the application and passing tests.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2020 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+[Youtube Video](https://www.youtube.com/watch?v=5MvhXAjnVQw&feature=youtu.be)
